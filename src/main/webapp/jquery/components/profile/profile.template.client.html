@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>User Admin</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          rel="stylesheet"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          rel="stylesheet"/>
+    <link href="profile.style.client.css"
+          rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="profile.service.client.js"></script>
+    <script src="profile.controller.client.js"></script>
+</head>
+
+<body>
+<div class="container">
+    <div>
+        <h1>Profile</h1>
+    </div>
+
+    <div class="alert alert-success" role="alert">
+        Profile successfully saved
+    </div>
+
+    <div class="form-group row">
+        <label for="usernameFld" class="col-sm-2 col-form-label">Username</label>
+        <div class="col-sm-10">
+            <input id="usernameFld" class="form-control" readonly/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="phoneFld" class="col-sm-2 col-form-label">Phone</label>
+        <div class="col-sm-10">
+            <input id="phoneFld" class="form-control"/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="emailFld" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-10">
+            <input id="emailFld" class="form-control"/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="roleFld" class="col-sm-2 col-form-label">Role</label>
+        <div class="col-sm-10">
+            <select id="roleFld" class="form-control">
+                <option value="FACULTY">Faculty</option>
+                <option value="STUDENT">Student</option>
+                <option value="ADMIN">Admin</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="dobFld" class="col-sm-2 col-form-label">Date of Birth</label>
+        <div class="col-sm-10">
+            <input id="dobFld" type="date" class="form-control"/>
+        </div>
+    </div>
+
+    <div class="row profile-btn">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-10">
+            <button id="updateBtn">Update</button>
+        </div>
+    </div>
+
+    <div class="row profile-btn">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-10">
+            <button id="logoutBtn">Logout</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
