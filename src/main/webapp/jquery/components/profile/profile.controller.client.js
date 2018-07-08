@@ -3,7 +3,7 @@
     var $updateBtn, $logoutBtn;
     var $successAlert;
 
-    var userService = new AdminUserServiceClient();
+    // var userService = new AdminUserServiceClient();
     $(main);
 
     function main() {
@@ -18,4 +18,4 @@
 
         $successAlert.hide();
     }
-})
+})();
