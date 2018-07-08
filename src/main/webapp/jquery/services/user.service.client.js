@@ -7,8 +7,18 @@ function UserServiceClient() {
     this.url = 'http://localhost:8080/api/user';
     var self = this;
     function createUser(user, callback) { … }
-    function findAllUsers(callback) { … }
+    function findAllUsers(callback) {
+        return $.ajax({
+            url: self.url,
+            success: callback
+        })
+    }
     function findUserById(userId, callback) { … }
     function updateUser(userId, user, callback) { … }
-    function deleteUser(userId, callback) { … }
+    function deleteUser(userId, callback) {
+        return fetch(
+            self.url + '/' + userId,
+            {method: 'DELETE'}
+        );
+    }
 }
