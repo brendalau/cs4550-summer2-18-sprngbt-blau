@@ -23,21 +23,20 @@
                 .removeClass('wbdv-hidden');
         $tbody = $('.wbdv-tbody');
 
-        findAllUsers();
+        // findAllUsers();
 
-        $retrieveBtn.click(findAllUsers);
+        // $retrieveBtn.click(findAllUsers);
         $createBtn.click(createUser);
-        $updateBtn.click(updateUser);
-        $removeBtn.click(removeUser);
-        $editBtn.click(findUserById);
+        // $updateBtn.click(updateUser);
+        // $removeBtn.click(removeUser);
+        // $editBtn.click(findUserById);
     }
 
-    //done?
-    function findAllUsers() {
-        userService.findAllUsers(renderUsers);
-    }
+    // function findAllUsers() {
+    //     userService.findAllUsers()
+    //         .then(renderUsers);
+    // }
 
-    // done
     function createUser() {
         var $usernameStr = $usernameFld.val();
         var $passwordStr = $passwordFld.val();
@@ -46,60 +45,59 @@
         var $roleStr = $roleFld.val();
         var $user = new User($usernameStr, $passwordStr, $firstNameStr, $lastNameStr, $roleStr);
 
-        userService.createUser($user)
-            .then(findAllUsers);
+        // userService.createUser($user)
+        //     .then(findAllUsers);
+
+        userService.createUser($user);
     }
 
-    // done?
-    function updateUser(event) {
-        var $currCheckBtn = $(event.currentTarget);
-        var $userId = $currCheckBtn
-            .parent()
-            .parent()
-            .attr('id');
-        var $user = new User($usernameStr, $passwordStr, $firstNameStr, $lastNameStr, $roleStr);
-
-        userService.updateUser($userId, $user)
-            .then(findAllUsers);
-    }
-
-    // done?
-    function removeUser() {
-        var $currRemoveBtn = $(event.currentTarget);
-        var $userId = $currRemoveBtn
-            .parent()
-            .parent()
-            .attr('id');
-
-        userService.removeUser($userId)
-            .then(findAllUsers);
-    }
-
-    // done?
-    function findUserById(event) {
-        var $currEditBtn = $(event.currentTarget);
-        var $userId = $currEditBtn
-            .parent()
-            .parent()
-            .attr('id');
-
-        userService.findUserById($userId)
-            .then(findAllUsers);
-    }
-
-    // function renderUser(user) {
-    //     $usernameFld.html
+    // function updateUser(event) {
+    //     var $currCheckBtn = $(event.currentTarget);
+    //     var $userId = $currCheckBtn
+    //         .parent()
+    //         .parent()
+    //         .attr('id');
+    //     var $user = new User($usernameStr, $passwordStr, $firstNameStr, $lastNameStr, $roleStr);
+    //
+    //     userService.updateUser($userId, $user)
+    //         .then(findAllUsers);
     // }
-
-    function renderUsers(users) {
-        $tbody.empty();
-        for(var u in users) {
-            var user = users[u];
-            var $row = $userRowTemplate.clone();
-            $row.attr('id', user.id);
-            $row.find('wbdv-username')
-                .html(user.username);
-            $tbody.append($row);
-        }
-    }
+    //
+    // function removeUser() {
+    //     var $currRemoveBtn = $(event.currentTarget);
+    //     var $userId = $currRemoveBtn
+    //         .parent()
+    //         .parent()
+    //         .attr('id');
+    //
+    //     userService.removeUser($userId)
+    //         .then(findAllUsers);
+    // }
+    //
+    // function findUserById(event) {
+    //     var $currEditBtn = $(event.currentTarget);
+    //     var $userId = $currEditBtn
+    //         .parent()
+    //         .parent()
+    //         .attr('id');
+    //
+    //     userService.findUserById($userId)
+    //         .then(findAllUsers);
+    // }
+    //
+    // // function renderUser(user) {
+    // //     $usernameFld.html
+    // // }
+    //
+    // function renderUsers(users) {
+    //     $tbody.empty();
+    //     for(var u in users) {
+    //         var user = users[u];
+    //         var $row = $userRowTemplate.clone();
+    //         $row.attr('id', user.id);
+    //         $row.find('wbdv-username')
+    //             .html(user.username);
+    //         $tbody.append($row);
+    //     }
+    // }
 })();
