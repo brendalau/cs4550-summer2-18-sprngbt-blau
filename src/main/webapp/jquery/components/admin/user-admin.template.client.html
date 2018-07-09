@@ -9,9 +9,6 @@
           rel="stylesheet"/>
     <link href="user-admin.style.client.css"
           rel="stylesheet"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!--<script src="user-admin.service.client.js"></script>-->
-    <script src="user-admin.controller.client.js"></script>
 </head>
 
 <body>
@@ -55,7 +52,7 @@
     </thead>
 
     <tbody class="wbdv-tbody">
-        <tr class="wbdv-template wbdv-user wbdv-hidden">
+        <tr class="wbdv-template wbdv-user">
             <td class="wbdv-username">ada</td>
             <td>&nbsp;</td>
             <td class="wbdv-first-name">Ada</td>
@@ -72,9 +69,11 @@
 </table>
 </body>
 
-<script
-        src="https://code.jquery.com/jquery-3.3.1.min.js"
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="../../models/user.model.client.js"></script>
+<script src="../../services/user.service.client.js"></script>
 <script src="user-admin.controller.client.js"></script>
 </html>
