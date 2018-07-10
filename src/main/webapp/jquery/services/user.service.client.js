@@ -9,6 +9,9 @@ function UserServiceClient() {
 
     this.login = login;
 
+    // this.registerSuccess = registerSuccess;
+
+    // this.login = login();
     this.url = 'http://localhost:8080/api/user';
     var self = this;
 
