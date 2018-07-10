@@ -4,19 +4,13 @@ function UserServiceClient() {
     this.findUserById = findUserById;
     this.removeUser = removeUser;
     this.updateUser = updateUser;
-    // this.login = login();
-    this.url = 'http://localhost:8080/api/user';
-    // this.login = 'http://localhost:8080/api/login';
-    var self = this;
 
-    // function login(username, password) {
-    //     return fetch(
-    //         self.login,
-    //         {method: 'post',
-    //          body: JSON.stringify({username:username, password: password}),
-    //          headers: {'content-type': 'application/json'}
-    //         });
-    // }
+    this.register = register;
+
+    this.login = login;
+
+    this.url = 'http://localhost:8080/api/user';
+    var self = this;
 
     function createUser(user) {
         return fetch(
@@ -42,8 +36,16 @@ function UserServiceClient() {
             });
     }
 
+    function removeUser(userId) {
+        return fetch(
+            self.url + '/' + userId, {
+                 method: 'delete'
+            });
+    }
+
     function updateUser(userId, user) {
-        return fetch(self.url + '/' + userId, {
+        return fetch(
+                self.url + '/' + userId, {
                 method: 'put',
                 body: JSON.stringify(user),
                 headers: {
@@ -59,10 +61,29 @@ function UserServiceClient() {
             });
     }
 
-    function removeUser(userId) {
-        return fetch(
-            self.url + '/' + userId, {
-                method: 'delete'
-            })
+
+    function register(user) {
+        return createUser(user);
     }
+
+
+    function login(username, password) {
+        return fetch(
+            self.url, {
+                method: 'post',
+                body: JSON.stringify({username:username, password: password}),
+                headers: {'content-type': 'application/json'}
+            });
+    }
+
+    // function findUserByEmail(email) {
+    //     $.ajax({
+    //                url: self.url +
+    //                method:'post',
+    //                data:{email: email},
+    //                success:function(msg){
+    //                    alert(msg); // your message will come here.
+    //                }
+    //             });
+    // }
 }
