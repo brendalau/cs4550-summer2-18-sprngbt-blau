@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>User Admin</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          rel="stylesheet"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          rel="stylesheet"/>
+    <link href="login.style.client.css"
+          rel="stylesheet"/>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Log In</h1>
+        <form>
+            <div class="form-group row">
+                <label for="usernameFld" class="col-sm-2 col-form-label">
+                    Username </label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="usernameFld">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="passwordFld" class="col-sm-2 col-form-label">
+                    Password </label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control wbdv-password-fld"
+                           id="passwordFld">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10">
+                    <button id="loginBtn">Log In</button>
+                    <a href="#">Sign up</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="../../models/user.model.client.js"></script>
+<script src="../../services/user.service.client.js"></script>
+<script src="login.controller.client.js"></script>
+</html>
