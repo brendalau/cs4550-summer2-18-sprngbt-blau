@@ -9,8 +9,6 @@ function UserServiceClient() {
 
     this.login = login;
 
-    // this.registerSuccess = registerSuccess;
-
     // this.login = login();
     this.url = 'http://localhost:8080/api/user';
     var self = this;
@@ -53,13 +51,6 @@ function UserServiceClient() {
                 body: JSON.stringify(user),
                 headers: {
                     'content-type': 'application/json'
-                }
-            })
-            .then(function (response) {
-                if (response.bodyUsed) {
-                    return response.json();
-                } else {
-                    return null;
                 }
             });
     }
