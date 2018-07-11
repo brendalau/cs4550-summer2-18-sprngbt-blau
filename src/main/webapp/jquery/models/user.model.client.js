@@ -1,9 +1,12 @@
-function User(username, password, firstName, lastName, role) {
+function User(username, password, firstName, lastName, role, phone, email, dob) {
     this.username = username;
     this.password = password;
     this.firstName = firstName;
     this.lastName = lastName;
     this.role = role;
+    this.phone = phone;
+    this.email = email;
+    this.dob = dob;
 
     this.setUsername = setUsername;
     this.getUsername = getUsername;
@@ -15,6 +18,12 @@ function User(username, password, firstName, lastName, role) {
     this.getLastName = getLastName;
     this.setRole = setRole;
     this.getRole = getRole;
+    this.getPhone = getPhone;
+    this.setPhone = setPhone;
+    this.getEmail = getEmail;
+    this.setEmail = setEmail;
+    this.getDob = getDob;
+    this.setDob = setDob;
 
     function setUsername(username) {
         this.username = username;
@@ -45,5 +54,23 @@ function User(username, password, firstName, lastName, role) {
     }
     function getRole() {
         return this.role;
+    }
+    function setPhone(phone) {
+        this.phone = phone;
+    }
+    function getPhone() {
+        return this.phone;
+    }
+    function setEmail(email) {
+        this.email = email;
+    }
+    function getEmail() {
+        return this.email;
+    }
+    function setDob(dob) {
+        this.dob = dob;
+    }
+    function getDob() {
+        return this.dob;
     }
 }
