@@ -1,4 +1,4 @@
-package com.example.cs4550summer218sprngbtblau;
+package cs4550summer218sprngbtblau;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

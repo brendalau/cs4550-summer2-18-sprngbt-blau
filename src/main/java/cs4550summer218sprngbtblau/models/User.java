@@ -1,4 +1,4 @@
-package webdev.models;
+package cs4550summer218sprngbtblau.models;
 
 import java.util.Date;
 
@@ -15,7 +15,7 @@ public class User {
 	private String username;
 	private String password;
 	private String firstName;
-	private String lasteName;
+	private String lastName;
 	private String role;
 	private String phone;
 	private String email;
@@ -45,11 +45,11 @@ public class User {
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	public String getLasteName() {
-		return lasteName;
+	public String getLastName() {
+		return lastName;
 	}
-	public void setLasteName(String lasteName) {
-		this.lasteName = lasteName;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 	public String getRole() {
 		return role;
