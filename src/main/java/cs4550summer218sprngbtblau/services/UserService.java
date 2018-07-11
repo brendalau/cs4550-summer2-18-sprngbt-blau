@@ -51,6 +51,9 @@ public class UserService {
 			user.setFirstName(newUser.getFirstName());
 			user.setLastName(newUser.getLastName());
 			user.setRole(newUser.getRole());
+			user.setPhone(newUser.getPhone());
+			user.setEmail(newUser.getEmail());
+			user.setDob(newUser.getDob());
 			repository.save(user);
 			return user;
 		}
@@ -61,7 +64,7 @@ public class UserService {
 	public User register(@RequestBody User user, HttpSession session) {
 		Optional<User> data = repository.findUserByUsername(user.getUsername());
 		if (data.isPresent()) {
-			return null;
+			throw new IllegalArgumentException("Username is already taken");
 		} else {
 			User currUser = repository.save(user);
 			session.setAttribute("user", currUser);

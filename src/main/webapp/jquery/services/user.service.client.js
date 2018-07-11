@@ -61,8 +61,18 @@ function UserServiceClient() {
                 method: 'post',
                 body: JSON.stringify(user),
                 headers: {'content-type': 'application/json'
-                }
-            });
+                },
+                'credentials': 'include'
+            })
+            .then(registerStatus);
+    }
+
+    function registerStatus(response) {
+        if (response.status === 200) {
+            window.location.href = '../profile/profile.template.client.html';
+        } else {
+            alert('Username is already taken');
+        }
     }
 
     function findUserByUsername(username) {
