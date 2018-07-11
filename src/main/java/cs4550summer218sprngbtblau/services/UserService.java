@@ -134,4 +134,9 @@ public class UserService {
 		}
 		return user;
 	}
+	
+	@PostMapping("/api/logout")
+	public void logout(HttpSession session) {
+		session.setAttribute("user", null);
+	}
 }

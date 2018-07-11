@@ -30,10 +30,11 @@
             .then(renderUser);
 
         $updateBtn.click(updateProfile);
+        $logoutBtn.click(logout);
+
     }
 
     function renderUser(user) {
-        console.log(user);
         $usernameFld.val(user.username);
         $passwordFld.val(user.password);
         $firstNameFld.val(user.firstName);
@@ -41,7 +42,7 @@
         $roleFld.val(user.role);
         $phoneFld.val(user.phone);
         $emailFld.val(user.email);
-        $dobFld.val(user.dob);
+        $dobFld.val(user.dob.substring(0, 10));
     }
 
     function initVals() {
@@ -60,11 +61,12 @@
 
         userService.updateProfile(new User($usernameStr, $passwordStr, $firstNameStr,
                                            $lastNameStr, $roleStr, $phoneStr, $emailStr, $dobStr))
-            .then(renderUser)
-            .then(showAlert);
+            .then(userService.populateProfile)
+            .then($successAlert.show());
     }
 
-    function showAlert() {
-        $successAlert.show();
+    function logout() {
+        userService.logout()
+            .then(window.location.href = '../login/login.template.client.html');
     }
 })();

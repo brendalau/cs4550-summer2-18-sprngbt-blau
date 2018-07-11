@@ -12,7 +12,9 @@ function UserServiceClient() {
 
     this.populateProfile = populateProfile;
     this.updateProfile = updateProfile;
+    this.logout = logout;
 
+    this.logoutUrl = 'http://localhost:8080/api/logout';
     this.profileUrl = 'http://localhost:8080/api/profile';
     this.loginUrl = 'http://localhost:8080/api/login';
     this.registerUrl = 'http://localhost:8080/api/register';
@@ -118,5 +120,11 @@ function UserServiceClient() {
                  body: JSON.stringify(user),
                  headers: {'content-type': 'application/json'}
              });
+    }
+
+    function logout() {
+        return fetch(self.logoutUrl, {
+            method: 'post'
+        });
     }
 }

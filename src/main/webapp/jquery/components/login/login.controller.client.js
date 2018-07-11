@@ -24,7 +24,7 @@
         } else {
             userService.login($usernameStr, $passwordStr)
                 .then(function (response) {
-                if(response != null) {
+                if(response !== null) {
                     window.location.href = '../profile/profile.template.client.html';
                 } else {
                     alert('User does not exist');
