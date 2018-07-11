@@ -23,11 +23,13 @@
             alert('Both fields are required to log in');
         } else {
             userService.login($usernameStr, $passwordStr)
-                .then(loginSuccess);
+                .then(function (response) {
+                if(response === null) {
+                    window.location.href = '../profile/profile.template.client.html';
+                } else {
+                    alert('User does not exist');
+                }
+            });
         }
-    }
-
-    function loginSuccess() {
-        window.location.href = '../profile/profile.template.client.html';
     }
 })();

@@ -26,16 +26,16 @@
         } else if ($passwordStr !== $password2Str) {
             alert('Passwords do not match');
         } else {
+            alert('hello');
             userService.register(new User($usernameStr, $passwordStr,
-                                          null, null, null, null, null, null));
+                                          null, null, null, null, null, null))
+                .then(function (response) {
+                    if(response === null) {
+                        window.location.href = '../profile/profile.template.client.html';
+                    } else {
+                        alert('Username already taken');
+                    }
+                });
         }
     }
-
-    // function registerStatus(response) {
-    //     if (response == null) {
-    //         alert('Username is already taken');
-    //     } else {
-    //         window.location.href = '../profile/profile.template.client.html';
-    //     }
-    // }
 })();
