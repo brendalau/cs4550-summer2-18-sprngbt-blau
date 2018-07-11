@@ -33,8 +33,16 @@ public class UserService {
 	}
 	
 	@PostMapping("/api/login")
-	public List<User> login(@RequestBody User user) {
-		return (List<User>) repository.findUserByCredentials(user.getUsername(), user.getPassword());
+	public User login(@RequestBody User user, HttpSession session) {
+		Optional<User> data = repository.findUserByCredentials(user.getUsername(), user.getPassword());
+		
+		if (!data.isPresent()) {
+			throw new IllegalArgumentException("User does not exist");
+		} else {
+			User currUser = data.get();
+			session.setAttribute("user", currUser);
+			return currUser;
+		}
 	}
 		
 	@GetMapping("/api/user")
@@ -45,7 +53,8 @@ public class UserService {
 	@PutMapping("/api/user/{userId}")
 	public User updateUser(@PathVariable("userId") int userId, @RequestBody User newUser) {
 		Optional<User> data = repository.findById(userId);
-		if(data.isPresent()) {
+		
+		if (data.isPresent()) {
 			User user = data.get();
 			user.setUsername(newUser.getUsername());
 			user.setFirstName(newUser.getFirstName());
@@ -63,6 +72,7 @@ public class UserService {
 	@PostMapping("/api/register")
 	public User register(@RequestBody User user, HttpSession session) {
 		Optional<User> data = repository.findUserByUsername(user.getUsername());
+		
 		if (data.isPresent()) {
 			throw new IllegalArgumentException("Username is already taken");
 		} else {
@@ -75,6 +85,7 @@ public class UserService {
 	@GetMapping("/api/user/{userId}")
 	public User findUserById(@PathVariable("userId") int userId) {
 		Optional<User> data = repository.findById(userId);
+		
 		if (data.isPresent()) {
 			return data.get();
 		}
@@ -84,6 +95,17 @@ public class UserService {
 	@GetMapping("/api/user/{username}")
 	public User findUserByUsername(@PathVariable("username") String username) {
 		Optional<User> data = repository.findUserByUsername(username);
+		
+		if (data.isPresent()) {
+			return data.get();
+		}
+		return null;
+	}
+	
+	@GetMapping("/api/user/{password}")
+	public User findUserByCredentials(String username, @PathVariable("password") String password) {
+		Optional<User> data = repository.findUserByCredentials(username, password);
+		
 		if (data.isPresent()) {
 			return data.get();
 		}
