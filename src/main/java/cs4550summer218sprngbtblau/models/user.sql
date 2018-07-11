@@ -3,7 +3,7 @@ CREATE TABLE `user` (
   `dob` datetime DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `first_name` varchar(255) DEFAULT NULL,
-  `laste_name` varchar(255) DEFAULT NULL,
+  `last_name` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `phone` varchar(255) DEFAULT NULL,
   `role` varchar(255) DEFAULT NULL,

@@ -42,7 +42,12 @@
         $roleFld.val(user.role);
         $phoneFld.val(user.phone);
         $emailFld.val(user.email);
-        $dobFld.val(user.dob.substring(0, 10));
+
+        if (user.dob === null) {
+            $dobFld.val(user.dob);
+        } else {
+            $dobFld.val(user.dob.substring(0, 10));
+        }
     }
 
     function initVals() {
