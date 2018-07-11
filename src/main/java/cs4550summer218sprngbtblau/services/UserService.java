@@ -1,4 +1,4 @@
-package webdev.services;
+package cs4550summer218sprngbtblau.services;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,16 +12,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import webdev.models.User;
-import webdev.repositories.UserRepository;
+import cs4550summer218sprngbtblau.models.User;
+import cs4550summer218sprngbtblau.repositories.UserRepository;
 
 @RestController
 public class UserService {
-//	@PostMapping("/api/user")
-//	public String createUser(User user) {
-//		return "Hello";
-//	}
-	
     @Autowired
 	UserRepository repository;
 	
@@ -50,7 +45,10 @@ public class UserService {
 		Optional<User> data = repository.findById(userId);
 		if(data.isPresent()) {
 			User user = data.get();
+			user.setUsername(newUser.getUsername());
 			user.setFirstName(newUser.getFirstName());
+			user.setLastName(newUser.getLastName());
+			user.setRole(newUser.getRole());
 			repository.save(user);
 			return user;
 		}
