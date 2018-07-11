@@ -60,20 +60,28 @@ public class UserService {
 	@PostMapping("/api/user")
 	public User register(@RequestBody User user, HttpSession session) {
 		Optional<User> data = repository.findUserByUsername(user.getUsername());
-		if(data.isPresent()) {
+		if (data.isPresent()) {
 			return null;
-		}
-		else {
+		} else {
 			User currUser = repository.save(user);
 			session.setAttribute("user", currUser);
-		return currUser;
+			return currUser;
 		}
 	}
 	
 	@GetMapping("/api/user/{userId}")
 	public User findUserById(@PathVariable("userId") int userId) {
 		Optional<User> data = repository.findById(userId);
-		if(data.isPresent()) {
+		if (data.isPresent()) {
+			return data.get();
+		}
+		return null;
+	}
+	
+	@GetMapping("/api/user/{username}")
+	public User findUserByUsername(@PathVariable("username") String username) {
+		Optional<User> data = repository.findUserByUsername(username);
+		if (data.isPresent()) {
 			return data.get();
 		}
 		return null;
