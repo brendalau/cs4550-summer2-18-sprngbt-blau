@@ -26,12 +26,17 @@
         } else if ($passwordStr !== $password2Str) {
             alert('Passwords do not match');
         } else {
-            userService.register(new User($usernameStr, $passwordStr, null, null))
-                .then(registerSuccess);
+            userService.register(new User($usernameStr, $passwordStr,
+                                          null, null, null, null, null, null))
+                .then(registerStatus);
         }
     }
 
-    function registerSuccess() {
-        window.location.href = '../profile/profile.template.client.html';
+    function registerStatus() {
+        if (user == null) {
+            alert('Username is already taken');
+        } else {
+            window.location.href = '../profile/profile.template.client.html';
+        }
     }
 })();

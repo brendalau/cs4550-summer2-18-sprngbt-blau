@@ -3,6 +3,8 @@ package cs4550summer218sprngbtblau.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,6 +55,19 @@ public class UserService {
 			return user;
 		}
 		return null;
+	}
+	
+	@PostMapping("/api/user")
+	public User register(@RequestBody User user, HttpSession session) {
+		Optional<User> data = repository.findUserByUsername(user.getUsername());
+		if(data.isPresent()) {
+			return null;
+		}
+		else {
+			User currUser = repository.save(user);
+			session.setAttribute("user", currUser);
+		return currUser;
+		}
 	}
 	
 	@GetMapping("/api/user/{userId}")
