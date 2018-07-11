@@ -3,6 +3,7 @@ package cs4550summer218sprngbtblau.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,16 +34,15 @@ public class UserService {
 	}
 	
 	@PostMapping("/api/login")
-	public User login(@RequestBody User user, HttpSession session) {
-		Optional<User> data = repository.findUserByCredentials(user.getUsername(), user.getPassword());
+	public User login(@RequestBody User user, HttpSession session, HttpServletResponse response) {
+		User data = repository.findUserByCredentials(user.getUsername(), user.getPassword());
 		
-		if (!data.isPresent()) {
-			throw new IllegalArgumentException("User does not exist");
+		if (data == null) {
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 		} else {
-			User currUser = data.get();
-			session.setAttribute("user", currUser);
-			return currUser;
+			session.setAttribute("user", data);
 		}
+		return data;
 	}
 		
 	@GetMapping("/api/user")
@@ -71,9 +71,9 @@ public class UserService {
 	
 	@PostMapping("/api/register")
 	public User register(@RequestBody User user, HttpSession session) {
-		Optional<User> data = repository.findUserByUsername(user.getUsername());
+		User data = repository.findUserByUsername(user.getUsername());
 		
-		if (data.isPresent()) {
+		if (data != null) {
 			throw new IllegalArgumentException("Username is already taken");
 		} else {
 			User currUser = repository.save(user);
@@ -94,21 +94,44 @@ public class UserService {
 	
 	@GetMapping("/api/user/{username}")
 	public User findUserByUsername(@PathVariable("username") String username) {
-		Optional<User> data = repository.findUserByUsername(username);
+		User data = repository.findUserByUsername(username);
 		
-		if (data.isPresent()) {
-			return data.get();
+		if (data != null) {
+			return data;
 		}
 		return null;
 	}
 	
 	@GetMapping("/api/user/{password}")
 	public User findUserByCredentials(String username, @PathVariable("password") String password) {
-		Optional<User> data = repository.findUserByCredentials(username, password);
+		User data = repository.findUserByCredentials(username, password);
 		
-		if (data.isPresent()) {
-			return data.get();
+		if (data != null) {
+			return data;
 		}
 		return null;
+	}
+	
+	@GetMapping("/api/profile")
+	public Optional<User> profile(HttpSession session) {
+		User currUser = (User) session.getAttribute("user");
+		return repository.findById(currUser.getId());
+	}
+	
+	@PutMapping("/api/profile")
+	public User updateProfile(@RequestBody User updatedUser) {
+		User data = repository.findUserByUsername(updatedUser.getUsername());
+		User user = data;
+		
+		if (data != null) {
+			user.setFirstName(updatedUser.getFirstName());
+			user.setLastName(updatedUser.getLastName());
+			user.setRole(updatedUser.getRole());
+			user.setPhone(updatedUser.getPhone());
+			user.setEmail(updatedUser.getEmail());
+			user.setDob(updatedUser.getDob());
+			repository.save(user);
+		}
+		return user;
 	}
 }

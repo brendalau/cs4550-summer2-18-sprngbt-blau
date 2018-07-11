@@ -9,9 +9,6 @@
           rel="stylesheet"/>
     <link href="profile.style.client.css"
           rel="stylesheet"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="profile.service.client.js"></script>
-    <script src="profile.controller.client.js"></script>
 </head>
 
 <body>
@@ -27,7 +24,39 @@
     <div class="form-group row">
         <label for="usernameFld" class="col-sm-2 col-form-label">Username</label>
         <div class="col-sm-10">
-            <input id="usernameFld" class="form-control" placeholder="Jane" readonly/>
+            <input id="usernameFld" class="form-control" placeholder="JD123" readonly/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="passwordFld" class="col-sm-2 col-form-label">Password</label>
+        <div class="col-sm-10">
+            <input id="passwordFld" class="form-control" placeholder="4567"/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="firstNameFld" class="col-sm-2 col-form-label">First Name</label>
+        <div class="col-sm-10">
+            <input id="firstNameFld" class="form-control" placeholder="Jane"/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="lastNameFld" class="col-sm-2 col-form-label">Last Name</label>
+        <div class="col-sm-10">
+            <input id="lastNameFld" class="form-control" placeholder="Doe"/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="roleFld" class="col-sm-2 col-form-label">Role</label>
+        <div class="col-sm-10">
+            <select id="roleFld" class="form-control">
+                <option value="FACULTY">Faculty</option>
+                <option value="STUDENT">Student</option>
+                <option value="ADMIN">Admin</option>
+            </select>
         </div>
     </div>
 
@@ -42,17 +71,6 @@
         <label for="emailFld" class="col-sm-2 col-form-label">Email</label>
         <div class="col-sm-10">
             <input id="emailFld" class="form-control" placeholder="jane@doe.com"/>
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label for="roleFld" class="col-sm-2 col-form-label">Role</label>
-        <div class="col-sm-10">
-            <select id="roleFld" class="form-control">
-                <option value="FACULTY">Faculty</option>
-                <option value="STUDENT">Student</option>
-                <option value="ADMIN">Admin</option>
-            </select>
         </div>
     </div>
 
@@ -78,4 +96,12 @@
     </div>
 </div>
 </body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="../../models/user.model.client.js"></script>
+<script src="../../services/user.service.client.js"></script>
+<script src="profile.controller.client.js"></script>
 </html>
