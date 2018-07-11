@@ -105,8 +105,8 @@
 
         $row.attr('id', user.id);
         $row.find('.wbdv-username').html(user.username);
-        $row.find('.wbdv-firstName').html(user.firstName);
-        $row.find('.wbdv-lastName').html(user.lastName);
+        $row.find('.wbdv-first-name').html(user.firstName);
+        $row.find('.wbdv-last-name').html(user.lastName);
         $row.find('.wbdv-role').html(user.role);
 
         $tbody.append($row);

@@ -6,6 +6,7 @@ function UserServiceClient() {
     this.updateUser = updateUser;
 
     this.register = register;
+    this.findUserByUsername = findUserByUsername;
 
     this.login = login;
 
@@ -30,8 +31,6 @@ function UserServiceClient() {
     }
 
     function findUserById(userId) {
-        console.log('hi');
-
         return fetch(self.url + '/' + userId)
             .then(function (response) {
                 return response.json();
@@ -42,18 +41,18 @@ function UserServiceClient() {
         return fetch(
             self.url + '/' + userId, {
                  method: 'delete'
-            });
+             });
     }
 
     function updateUser(userId, user) {
         return fetch(
-                self.url + '/' + userId, {
-                method: 'put',
-                body: JSON.stringify(user),
-                headers: {
-                    'content-type': 'application/json'
-                }
-            });
+            self.url + '/' + userId, {
+                 method: 'put',
+                 body: JSON.stringify(user),
+                 headers: {
+                     'content-type': 'application/json'
+                 }
+             });
     }
 
     function register(user) {
@@ -66,11 +65,18 @@ function UserServiceClient() {
             });
     }
 
+    function findUserByUsername(username) {
+        return fetch(self.url + '/' + username)
+            .then(function (response) {
+                return response.json();
+            });
+    }
+
     function login(username, password) {
         return fetch(
             self.url, {
                 method: 'post',
-                body: JSON.stringify({username:username, password: password}),
+                body: JSON.stringify({username:username, password:password}),
                 headers: {'content-type': 'application/json'}
             });
     }
