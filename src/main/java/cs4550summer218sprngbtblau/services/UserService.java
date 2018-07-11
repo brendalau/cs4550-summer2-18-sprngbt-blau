@@ -70,16 +70,15 @@ public class UserService {
 	}
 	
 	@PostMapping("/api/register")
-	public User register(@RequestBody User user, HttpSession session) {
+	public User register(@RequestBody User user, HttpSession session, HttpServletResponse response) {
 		User data = repository.findUserByUsername(user.getUsername());
 		
-		if (data != null) {
-			throw new IllegalArgumentException("Username is already taken");
+		if (data == null) {
+			session.setAttribute("user", user);
 		} else {
-			User currUser = repository.save(user);
-			session.setAttribute("user", currUser);
-			return currUser;
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 		}
+		return user;
 	}
 	
 	@GetMapping("/api/user/{userId}")
@@ -119,8 +118,8 @@ public class UserService {
 	}
 	
 	@PutMapping("/api/profile")
-	public User updateProfile(@RequestBody User updatedUser) {
-		User data = repository.findUserByUsername(updatedUser.getUsername());
+	public User updateProfile(@RequestBody User updatedUser, HttpSession session) {
+		User data = (User) session.getAttribute("user");
 		User user = data;
 		
 		if (data != null) {

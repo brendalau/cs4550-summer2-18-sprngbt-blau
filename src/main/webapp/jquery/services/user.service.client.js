@@ -31,14 +31,14 @@ function UserServiceClient() {
     }
 
     function findAllUsers() {
-        return fetch(self.url)
+        return fetch(self.userUrl)
             .then(function (response) {
                 return response.json();
             });
     }
 
     function findUserById(userId) {
-        return fetch(self.url + '/' + userId)
+        return fetch(self.userUrl + '/' + userId)
             .then(function (response) {
                 return response.json();
             });
@@ -68,15 +68,13 @@ function UserServiceClient() {
                 credentials: 'include',
                 headers: {'content-type': 'application/json'},
             })
-            .then(registerStatus);
-    }
-
-    function registerStatus(response) {
-        if (response.status === 200) {
-            window.location.href = '../profile/profile.template.client.html';
-        } else {
-            alert('Username is already taken');
-        }
+            .then(function(response) {
+                if(response === null) {
+                    return null;
+                } else {
+                    return response.json();
+                }
+            });
     }
 
     function findUserByUsername(username) {
