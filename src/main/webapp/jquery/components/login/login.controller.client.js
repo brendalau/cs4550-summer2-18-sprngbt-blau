@@ -22,11 +22,14 @@
         if ($usernameStr === "" || $passwordStr === "") {
             alert('Both fields are required to log in');
         } else {
-            userService.login($usernameStr, $passwordStr);
+            userService.login($usernameStr, $passwordStr)
+                .then(function (response) {
+                if(response !== null) {
+                    window.location.href = '../profile/profile.template.client.html';
+                } else {
+                    alert('User does not exist');
+                }
+            });
         }
     }
-
-    // function loginStatus(response) {
-    //     if (response ==)
-    // }
 })();

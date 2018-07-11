@@ -8,11 +8,11 @@ import org.springframework.data.repository.query.Param;
 import cs4550summer218sprngbtblau.models.User;
 public interface UserRepository extends CrudRepository<User, Integer> {
 	@Query("SELECT u FROM User u WHERE u.username=:username AND u.password=:password")
-	Optional<User> findUserByCredentials(
+	User findUserByCredentials(
 		@Param("username") String username, 
 		@Param("password") String password);
 	
 	@Query("SELECT u FROM User u WHERE u.username=:username")
-	Optional<User> findUserByUsername(
+	User findUserByUsername(
 		@Param("username") String username);
 }
