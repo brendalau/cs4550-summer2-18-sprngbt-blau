@@ -16,8 +16,6 @@
         $searchBtn = $('.wbdv-search');
         $createBtn = $('.wbdv-create');
         $updateBtn = $('.wbdv-update');
-        $removeBtn = $('.wbdv-remove');
-        $editBtn = $('.wbdv-edit');
         $userRowTemplate = $('.wbdv-template').clone().removeClass('wbdv-hidden');
         $tbody = $('.wbdv-tbody');
 
@@ -26,8 +24,6 @@
         $searchBtn.click(findAllUsers);
         $createBtn.click(createUser);
         $updateBtn.click(updateUser);
-        $removeBtn.click(removeUser);
-        $editBtn.click(findUserById);
     }
 
     function findAllUsers() {
@@ -76,7 +72,8 @@
             .then(findAllUsers);
     }
 
-    function removeUser() {
+    function removeUser(event) {
+        console.log(event);
         var $currRemoveBtn = $(event.currentTarget);
         var $userId = $currRemoveBtn.parent().parent().parent().attr('id');
 
@@ -108,6 +105,9 @@
         $row.find('.wbdv-first-name').html(user.firstName);
         $row.find('.wbdv-last-name').html(user.lastName);
         $row.find('.wbdv-role').html(user.role);
+
+        $row.find('.wbdv-remove').click(removeUser);
+        $row.find('.wbdv-edit').click(findUserById);
 
         $tbody.append($row);
     }

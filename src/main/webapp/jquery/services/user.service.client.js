@@ -10,7 +10,9 @@ function UserServiceClient() {
 
     this.login = login;
 
-    this.url = 'http://localhost:8080/api/user';
+    this.loginUrl = 'http://localhost:8080/api/login';
+    this.registerUrl = 'http://localhost:8080/api/register';
+    this.userUrl = 'http://localhost:8080/api/user';
     var self = this;
 
     function createUser(user) {
@@ -18,8 +20,7 @@ function UserServiceClient() {
             self.url, {
                 method: 'post',
                 body: JSON.stringify(user),
-                headers: {'content-type': 'application/json'
-                }
+                headers: {'content-type': 'application/json'}
             });
     }
 
@@ -49,24 +50,31 @@ function UserServiceClient() {
             self.url + '/' + userId, {
                  method: 'put',
                  body: JSON.stringify(user),
-                 headers: {
-                     'content-type': 'application/json'
-                 }
+                 headers: {'content-type': 'application/json'}
              });
     }
 
     function register(user) {
         return fetch(
-            self.url, {
+            self.registerUrl, {
                 method: 'post',
                 body: JSON.stringify(user),
-                headers: {'content-type': 'application/json'
-                }
-            });
+                credentials: 'include',
+                headers: {'content-type': 'application/json'},
+            })
+            .then(registerStatus);
+    }
+
+    function registerStatus(response) {
+        if (response.status === 200) {
+            window.location.href = '../profile/profile.template.client.html';
+        } else {
+            alert('Username is already taken');
+        }
     }
 
     function findUserByUsername(username) {
-        return fetch(self.url + '/' + username)
+        return fetch(self.registeUrl + '/' + username)
             .then(function (response) {
                 return response.json();
             });
@@ -74,10 +82,20 @@ function UserServiceClient() {
 
     function login(username, password) {
         return fetch(
-            self.url, {
+            self.loginUrl, {
                 method: 'post',
                 body: JSON.stringify({username:username, password:password}),
+                credentials: 'include',
                 headers: {'content-type': 'application/json'}
-            });
+            })
+            .then(loginStatus);
+    }
+
+    function loginStatus(response) {
+        if (response.status === 200) {
+            window.location.href = '../profile/profile.template.client.html';
+        } else {
+            alert('User does not exist');
+        }
     }
 }

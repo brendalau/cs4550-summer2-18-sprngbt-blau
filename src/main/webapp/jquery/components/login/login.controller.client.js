@@ -22,12 +22,11 @@
         if ($usernameStr === "" || $passwordStr === "") {
             alert('Both fields are required to log in');
         } else {
-            userService.login($usernameStr, $passwordStr)
-                .then(loginSuccess);
+            userService.login($usernameStr, $passwordStr);
         }
     }
 
-    function loginSuccess() {
-        window.location.href = '../profile/profile.template.client.html';
-    }
+    // function loginStatus(response) {
+    //     if (response ==)
+    // }
 })();
