@@ -57,7 +57,13 @@ function UserServiceClient() {
     }
 
     function register(user) {
-        return createUser(user);
+        return fetch(
+            self.url, {
+                method: 'post',
+                body: JSON.stringify(user),
+                headers: {'content-type': 'application/json'
+                }
+            });
     }
 
     function login(username, password) {

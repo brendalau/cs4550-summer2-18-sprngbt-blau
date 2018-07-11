@@ -1,7 +1,7 @@
 (function () {
     var $usernameFld, $passwordFld, $firstNameFld, $lastNameFld, $roleFld;
     var $usernameStr, $passwordStr, $firstNameStr, $lastNameStr, $roleStr;
-    var $retrieveBtn, $createBtn, $updateBtn, $removeBtn, $editBtn;
+    var $searchBtn, $createBtn, $updateBtn, $removeBtn, $editBtn;
     var $userRowTemplate, $tbody;
 
     var userService = new UserServiceClient();
@@ -13,7 +13,7 @@
         $firstNameFld = $('#firstNameFld');
         $lastNameFld = $('#lastNameFld');
         $roleFld = $('#roleFld')
-        $retrieveBtn = $('.wbdv-search');
+        $searchBtn = $('.wbdv-search');
         $createBtn = $('.wbdv-create');
         $updateBtn = $('.wbdv-update');
         $removeBtn = $('.wbdv-remove');
@@ -23,7 +23,7 @@
 
         findAllUsers();
 
-        $retrieveBtn.click(findAllUsers);
+        $searchBtn.click(findAllUsers);
         $createBtn.click(createUser);
         $updateBtn.click(updateUser);
         $removeBtn.click(removeUser);
@@ -43,29 +43,36 @@
         $roleStr = $roleFld.val();
     }
 
+    function resetFlds() {
+        $usernameStr.val('');
+        $passwordStr.val('');
+        $firstNameStr.val('');
+        $lastNameStr.val('');
+        $roleStr.val('FACULTY');
+    }
+
     function createUser() {
         initVals();
 
-        if ($usernameStr && $passwordStr && $firstNameStr && $lastNameStr && $roleStr != null) {
-            // userService.createUser($user)
-            //     .then(findAllUsers);
-
+        if ($usernameStr !== "" || $passwordStr !== ""
+            || $firstNameStr !== "" || $lastNameStr !== "") {
             userService.createUser(new User($usernameStr, $passwordStr, $firstNameStr,
-                                            $lastNameStr, $roleStr))
+                                            $lastNameStr, $roleStr, null, null, null, null))
                 .then(findAllUsers);
         } else {
             alert('All fields are required to create a user');
         }
     }
 
-    function updateUser(event) {
+    function updateUser() {
         initVals();
+        resetFlds();
 
         var $currCheckBtn = $(event.currentTarget);
         var $userId = $currCheckBtn.parent().parent().parent().attr('id');
 
         userService.updateUser($userId,  new User($usernameStr, $passwordStr, $firstNameStr,
-                                                  $lastNameStr, $roleStr))
+                                                  $lastNameStr, $roleStr, null, null, null, null))
             .then(findAllUsers);
     }
 
@@ -77,12 +84,12 @@
             .then(findAllUsers);
     }
 
-    function revalFields(user) {
+    function populateFields(user) {
         $usernameFld.val(user.username);
-        $passwordFld = $(user.password);
-        $firstNameFld = $(user.firstName);
-        $lastNameFld = $(user.lastName);
-        $roleFld = $(user.role);
+        $passwordFld.val(user.password);
+        $firstNameFld.val(user.firstName);
+        $lastNameFld.val(user.lastName);
+        $roleFld.val(user.role);
     }
 
     function findUserById() {
@@ -90,17 +97,17 @@
         var $userId = $currEditBtn.parent().parent().parent().attr('id');
 
         userService.findUserById($userId)
-            .then(revalFields);
+            .then(populateFields);
     }
 
     function renderUser(user) {
         var $row = $userRowTemplate.clone();
 
         $row.attr('id', user.id);
-        $row.find('wbdv-username').html(user.username);
-        $row.find('wbdv-firstName').html(user.firstName);
-        $row.find('wbdv-lastName').html(user.lastName);
-        $row.find('wbdv-role').html(user.role);
+        $row.find('.wbdv-username').html(user.username);
+        $row.find('.wbdv-firstName').html(user.firstName);
+        $row.find('.wbdv-lastName').html(user.lastName);
+        $row.find('.wbdv-role').html(user.role);
 
         $tbody.append($row);
     }
