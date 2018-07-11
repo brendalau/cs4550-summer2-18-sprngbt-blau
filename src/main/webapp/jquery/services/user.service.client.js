@@ -6,9 +6,11 @@ function UserServiceClient() {
     this.updateUser = updateUser;
 
     this.register = register;
+    this.findUserByUsername = findUserByUsername;
 
     this.login = login;
 
+    this.register = 'http://localhost:8080/api/register';
     this.url = 'http://localhost:8080/api/user';
     var self = this;
 
@@ -30,8 +32,6 @@ function UserServiceClient() {
     }
 
     function findUserById(userId) {
-        console.log('hi');
-
         return fetch(self.url + '/' + userId)
             .then(function (response) {
                 return response.json();
@@ -42,29 +42,52 @@ function UserServiceClient() {
         return fetch(
             self.url + '/' + userId, {
                  method: 'delete'
-            });
+             });
     }
 
     function updateUser(userId, user) {
         return fetch(
-                self.url + '/' + userId, {
-                method: 'put',
-                body: JSON.stringify(user),
-                headers: {
-                    'content-type': 'application/json'
-                }
-            });
+            self.url + '/' + userId, {
+                 method: 'put',
+                 body: JSON.stringify(user),
+                 headers: {
+                     'content-type': 'application/json'
+                 }
+             });
     }
 
     function register(user) {
-        return createUser(user);
+        return fetch(
+            self.register, {
+                method: 'post',
+                body: JSON.stringify(user),
+                headers: {'content-type': 'application/json'
+                },
+                'credentials': 'include'
+            })
+            .then(registerStatus);
+    }
+
+    function registerStatus(response) {
+        if (response.status === 200) {
+            window.location.href = '../profile/profile.template.client.html';
+        } else {
+            alert('Username is already taken');
+        }
+    }
+
+    function findUserByUsername(username) {
+        return fetch(self.register + '/' + username)
+            .then(function (response) {
+                return response.json();
+            });
     }
 
     function login(username, password) {
         return fetch(
             self.url, {
                 method: 'post',
-                body: JSON.stringify({username:username, password: password}),
+                body: JSON.stringify({username:username, password:password}),
                 headers: {'content-type': 'application/json'}
             });
     }

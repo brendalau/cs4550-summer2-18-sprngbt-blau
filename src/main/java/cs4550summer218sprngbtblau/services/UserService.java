@@ -3,6 +3,8 @@ package cs4550summer218sprngbtblau.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,16 +51,40 @@ public class UserService {
 			user.setFirstName(newUser.getFirstName());
 			user.setLastName(newUser.getLastName());
 			user.setRole(newUser.getRole());
+			user.setPhone(newUser.getPhone());
+			user.setEmail(newUser.getEmail());
+			user.setDob(newUser.getDob());
 			repository.save(user);
 			return user;
 		}
 		return null;
 	}
 	
+	@PostMapping("/api/register")
+	public User register(@RequestBody User user, HttpSession session) {
+		Optional<User> data = repository.findUserByUsername(user.getUsername());
+		if (data.isPresent()) {
+			throw new IllegalArgumentException("Username is already taken");
+		} else {
+			User currUser = repository.save(user);
+			session.setAttribute("user", currUser);
+			return currUser;
+		}
+	}
+	
 	@GetMapping("/api/user/{userId}")
 	public User findUserById(@PathVariable("userId") int userId) {
 		Optional<User> data = repository.findById(userId);
-		if(data.isPresent()) {
+		if (data.isPresent()) {
+			return data.get();
+		}
+		return null;
+	}
+	
+	@GetMapping("/api/user/{username}")
+	public User findUserByUsername(@PathVariable("username") String username) {
+		Optional<User> data = repository.findUserByUsername(username);
+		if (data.isPresent()) {
 			return data.get();
 		}
 		return null;
