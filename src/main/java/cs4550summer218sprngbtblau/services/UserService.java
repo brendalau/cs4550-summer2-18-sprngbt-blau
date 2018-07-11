@@ -60,7 +60,7 @@ public class UserService {
 		return null;
 	}
 	
-	@PostMapping("/api/user")
+	@PostMapping("/api/register")
 	public User register(@RequestBody User user, HttpSession session) {
 		Optional<User> data = repository.findUserByUsername(user.getUsername());
 		if (data.isPresent()) {

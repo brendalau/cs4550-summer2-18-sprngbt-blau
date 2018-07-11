@@ -10,6 +10,7 @@ function UserServiceClient() {
 
     this.login = login;
 
+    this.register = 'http://localhost:8080/api/register';
     this.url = 'http://localhost:8080/api/user';
     var self = this;
 
@@ -57,7 +58,7 @@ function UserServiceClient() {
 
     function register(user) {
         return fetch(
-            self.url, {
+            self.register, {
                 method: 'post',
                 body: JSON.stringify(user),
                 headers: {'content-type': 'application/json'
@@ -76,7 +77,7 @@ function UserServiceClient() {
     }
 
     function findUserByUsername(username) {
-        return fetch(self.url + '/' + username)
+        return fetch(self.register + '/' + username)
             .then(function (response) {
                 return response.json();
             });
