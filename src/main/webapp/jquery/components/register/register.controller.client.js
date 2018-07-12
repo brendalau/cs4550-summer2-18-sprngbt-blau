@@ -1,6 +1,7 @@
 (function () {
     var $usernameFld, $passwordFld, $password2Fld;
     var $usernameStr, $passwordStr, $password2Str;
+    var $usernameAlert, $passwordAlert, $fieldsAlert;
     var $registerBtn;
 
     var userService = new UserServiceClient();
@@ -11,7 +12,16 @@
         $usernameFld = $('#usernameFld');
         $passwordFld = $('#passwordFld');
         $password2Fld = $('#password2Fld');
+        $usernameAlert = $('#usernameAlert');
+        $passwordAlert = $('#passwordAlert');
+        $fieldsAlert = $('#fieldsAlert');
+
         $registerBtn = $('#registerBtn');
+
+        $usernameAlert.hide();
+        $passwordAlert.hide();
+        $fieldsAlert.hide();
+
 
         $registerBtn.click(register);
     }
@@ -22,18 +32,17 @@
         $password2Str = $password2Fld.val();
 
         if ($usernameStr === "" || $passwordStr === "" || $password2Str === "") {
-            alert('All fields are required to sign up');
+            $fieldsAlert.show();
         } else if ($passwordStr !== $password2Str) {
-            alert('Passwords do not match');
+            $passwordAlert.show();
         } else {
-            alert('hello');
             userService.register(new User($usernameStr, $passwordStr,
                                           null, null, null, null, null, null))
                 .then(function (response) {
                     if(response === null) {
                         window.location.href = '../profile/profile.template.client.html';
                     } else {
-                        alert('Username already taken');
+                        $usernameAlert.show();
                     }
                 });
         }

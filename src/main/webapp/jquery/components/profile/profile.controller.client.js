@@ -5,7 +5,6 @@
     var $roleStr, $phoneStr, $emailStr, $dobStr;
     var $updateBtn, $logoutBtn;
     var $successAlert;
-    var $currUser = null;
 
     var userService = new UserServiceClient();
 
@@ -26,12 +25,15 @@
 
         $successAlert.hide();
 
-        userService.populateProfile()
-            .then(renderUser);
+        initProfile();
 
         $updateBtn.click(updateProfile);
         $logoutBtn.click(logout);
+    }
 
+    function initProfile() {
+        userService.initProfile()
+            .then(renderUser);
     }
 
     function renderUser(user) {
@@ -66,7 +68,7 @@
 
         userService.updateProfile(new User($usernameStr, $passwordStr, $firstNameStr,
                                            $lastNameStr, $roleStr, $phoneStr, $emailStr, $dobStr))
-            .then(userService.populateProfile)
+            .then(this.initProfile)
             .then($successAlert.show());
     }
 
@@ -74,4 +76,4 @@
         userService.logout()
             .then(window.location.href = '../login/login.template.client.html');
     }
-})();
+});

@@ -2,15 +2,15 @@ function UserServiceClient() {
     this.createUser = createUser;
     this.findAllUsers = findAllUsers;
     this.findUserById = findUserById;
-    this.removeUser = removeUser;
     this.updateUser = updateUser;
+    this.removeUser = removeUser;
+
 
     this.register = register;
-    this.findUserByUsername = findUserByUsername;
 
     this.login = login;
 
-    this.populateProfile = populateProfile;
+    this.initProfile = initProfile;
     this.updateProfile = updateProfile;
     this.logout = logout;
 
@@ -32,7 +32,7 @@ function UserServiceClient() {
 
     function findAllUsers() {
         return fetch(self.userUrl)
-            .then(function (response) {
+            .then(function(response) {
                 return response.json();
             });
     }
@@ -44,19 +44,19 @@ function UserServiceClient() {
             });
     }
 
+    function updateUser(user) {
+        return fetch(
+            self.userUrl, {
+                method: 'put',
+                body: JSON.stringify(user),
+                headers: {'content-type': 'application/json'}
+            });
+    }
+
     function removeUser(userId) {
         return fetch(
             self.userUrl + '/' + userId, {
                  method: 'delete'
-             });
-    }
-
-    function updateUser(user) {
-        return fetch(
-            self.userUrl, {
-                 method: 'put',
-                 body: JSON.stringify(user),
-                 headers: {'content-type': 'application/json'}
              });
     }
 
@@ -69,18 +69,11 @@ function UserServiceClient() {
                 headers: {'content-type': 'application/json'},
             })
             .then(function(response) {
-                if(response === null) {
+                if(response.status === 201) {
                     return null;
                 } else {
                     return response.json();
                 }
-            });
-    }
-
-    function findUserByUsername(username) {
-        return fetch(self.registerUrl + '/username/' + username)
-            .then(function (response) {
-                return response.json();
             });
     }
 
@@ -90,7 +83,7 @@ function UserServiceClient() {
                 method: 'post',
                 body: JSON.stringify({username:username, password:password}),
                 headers: {'content-type': 'application/json'},
-                'credentials': 'include'
+                credentials: 'include'
             })
             .then(function(response) {
                 if(response.status === 403) {
@@ -101,12 +94,12 @@ function UserServiceClient() {
             });
     }
 
-    function populateProfile() {
+    function initProfile() {
         return fetch(
             self.profileUrl, {
             credentials: 'include'
             })
-            .then(function (response) {
+            .then(function(response) {
                 return response.json();
             });
     }

@@ -75,4 +75,16 @@ public class User {
 	public void setDob(Date dob) {
 		this.dob = dob;
 	}
+	public User(String username, String password, String firstName, String lastName, String role, String phone,
+			String email, Date dob) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.role = role;
+		this.phone = phone;
+		this.email = email;
+		this.dob = dob;
+	}
 }

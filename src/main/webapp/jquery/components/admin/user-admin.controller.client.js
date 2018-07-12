@@ -1,7 +1,7 @@
 (function () {
     var $usernameFld, $passwordFld, $firstNameFld, $lastNameFld, $roleFld;
     var $usernameStr, $passwordStr, $firstNameStr, $lastNameStr, $roleStr;
-    var $searchBtn, $createBtn, $updateBtn, $removeBtn, $editBtn;
+    var $searchBtn, $createBtn, $updateBtn;
     var $userRowTemplate, $tbody;
 
     var userService = new UserServiceClient();
@@ -26,25 +26,12 @@
         $updateBtn.click(updateUser);
     }
 
-    function findAllUsers() {
-        userService.findAllUsers()
-            .then(renderUsers);
-    }
-
     function initVals() {
         $usernameStr = $usernameFld.val();
         $passwordStr = $passwordFld.val();
         $firstNameStr = $firstNameFld.val();
         $lastNameStr = $lastNameFld.val();
         $roleStr = $roleFld.val();
-    }
-
-    function resetFlds() {
-        $usernameFld.val('');
-        $passwordFld.val('');
-        $firstNameFld.val('');
-        $lastNameFld.val('');
-        $roleFld.val('FACULTY');
     }
 
     function createUser() {
@@ -58,6 +45,27 @@
         } else {
             alert('All fields are required to create a user');
         }
+    }
+
+    function findAllUsers() {
+        userService.findAllUsers()
+            .then(renderUsers);
+    }
+
+    function findUserById() {
+        var $currEditBtn = $(event.currentTarget);
+        var $userId = $currEditBtn.parent().parent().parent().attr('id');
+
+        userService.findUserById($userId)
+            .then(populateFields);
+    }
+
+    function populateFields(user) {
+        $usernameFld.val(user.username);
+        $passwordFld.val(user.password);
+        $firstNameFld.val(user.firstName);
+        $lastNameFld.val(user.lastName);
+        $roleFld.val(user.role);
     }
 
     function updateUser() {
@@ -77,20 +85,12 @@
             .then(findAllUsers);
     }
 
-    function populateFields(user) {
-        $usernameFld.val(user.username);
-        $passwordFld.val(user.password);
-        $firstNameFld.val(user.firstName);
-        $lastNameFld.val(user.lastName);
-        $roleFld.val(user.role);
-    }
-
-    function findUserById() {
-        var $currEditBtn = $(event.currentTarget);
-        var $userId = $currEditBtn.parent().parent().parent().attr('id');
-
-        userService.findUserById($userId)
-            .then(populateFields);
+    function resetFlds() {
+        $usernameFld.val('');
+        $passwordFld.val('');
+        $firstNameFld.val('');
+        $lastNameFld.val('');
+        $roleFld.val('FACULTY');
     }
 
     function renderUser(user) {

@@ -1,7 +1,7 @@
 (function () {
     var $usernameFld, $passwordFld;
     var $usernameStr, $passwordStr;
-    var $loginBtn;
+    var $usernameAlert, $loginBtn;
 
     var userService = new UserServiceClient();
 
@@ -10,7 +10,10 @@
     function main() {
         $usernameFld = $('#usernameFld');
         $passwordFld = $('#passwordFld');
+        $usernameAlert = $('.alert');
         $loginBtn = $('#loginBtn');
+
+        $usernameAlert.hide();
 
         $loginBtn.click(login);
     }
@@ -27,7 +30,7 @@
                 if(response !== null) {
                     window.location.href = '../profile/profile.template.client.html';
                 } else {
-                    alert('User does not exist');
+                    $usernameAlert.show();
                 }
             });
         }

@@ -23,34 +23,23 @@ public class UserService {
     @Autowired
 	UserRepository repository;
 	
-	@DeleteMapping("/api/user/{userId}")
-	public void deleteUser(@PathVariable("userId") int id) {
-		repository.deleteById(id);
-	}
-	
-	@PostMapping("/api/user")
+    @PostMapping("/api/user")
 	public User createUser(@RequestBody User user) {
 		return repository.save(user);
 	}
-	
-	@PostMapping("/api/login")
-	public User login(@RequestBody User user, HttpSession session, HttpServletResponse response) {
-		User data = repository.findUserByCredentials(user.getUsername(), user.getPassword());
-		
-		if (data == null) {
-			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-		} else {
-			session.setAttribute("user", data);
-		}
-		return data;
-	}
-		
-	@GetMapping("/api/user")
+    
+    @GetMapping("/api/user")
 	public List<User> findAllUsers() {
 		return (List<User>) repository.findAll();
 	}
-
-	@PutMapping("/api/user")
+    
+    @GetMapping("/api/user/id/{userId}")
+	public Optional<User> findUserByUserId(@PathVariable("userId") String userId) {
+		int id = Integer.parseInt(userId);
+		return repository.findById(id);
+	}
+    
+    @PutMapping("/api/user")
 	public User updateUser(@RequestBody User newUser) {
 		User data = repository.findUserByUsername(newUser.getUsername());
 		
@@ -60,6 +49,21 @@ public class UserService {
 			data.setLastName(newUser.getLastName());
 			data.setRole(newUser.getRole());
 			repository.save(data);
+			return data;
+		}
+		return null;
+	}
+    
+	@DeleteMapping("/api/user/{userId}")
+	public void deleteUser(@PathVariable("userId") int id) {
+		repository.deleteById(id);
+	}
+	
+	@GetMapping("/api/user/username/{username}")
+	public User findUserByUsername(@PathVariable("username") String username) {
+		User data = repository.findUserByUsername(username);
+		
+		if (data != null) {
 			return data;
 		}
 		return null;
@@ -78,34 +82,20 @@ public class UserService {
 		return data;
 	}
 	
-	@GetMapping("/api/user/id/{userId}")
-	public Optional<User> findUserByUserId(@PathVariable("userId") String userId) {
-		int id = Integer.parseInt(userId);
-		return repository.findById(id);
-	}
-	
-	@GetMapping("/api/user/username/{username}")
-	public User findUserByUsername(@PathVariable("username") String username) {
-		User data = repository.findUserByUsername(username);
+	@PostMapping("/api/login")
+	public User login(@RequestBody User user, HttpSession session, HttpServletResponse response) {
+		User data = repository.findUserByCredentials(user.getUsername(), user.getPassword());
 		
-		if (data != null) {
-			return data;
+		if (data == null) {
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+		} else {
+			session.setAttribute("user", data);
 		}
-		return null;
-	}
-	
-	@GetMapping("/api/user/{password}")
-	public User findUserByCredentials(String username, @PathVariable("password") String password) {
-		User data = repository.findUserByCredentials(username, password);
-		
-		if (data != null) {
-			return data;
-		}
-		return null;
+		return data;
 	}
 	
 	@GetMapping("/api/profile")
-	public Optional<User> profile(HttpSession session) {
+	public Optional<User> initProfile(HttpSession session) {
 		User currUser = (User) session.getAttribute("user");
 		return repository.findById(currUser.getId());
 	}
