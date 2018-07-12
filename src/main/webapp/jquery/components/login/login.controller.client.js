@@ -1,7 +1,7 @@
 (function () {
     var $usernameFld, $passwordFld;
     var $usernameStr, $passwordStr;
-    var $usernameAlert, $loginBtn;
+    var $usernameAlert, $fieldsAlert, $loginBtn;
 
     var userService = new UserServiceClient();
 
@@ -10,20 +10,25 @@
     function main() {
         $usernameFld = $('#usernameFld');
         $passwordFld = $('#passwordFld');
-        $usernameAlert = $('.alert');
+        $usernameAlert = $('#usernameAlert');
+        $fieldsAlert = $('#fieldsAlert');
         $loginBtn = $('#loginBtn');
 
         $usernameAlert.hide();
+        $fieldsAlert.hide();
 
         $loginBtn.click(login);
     }
 
     function login() {
+        $usernameAlert.hide();
+        $fieldsAlert.hide();
+
         $usernameStr = $usernameFld.val();
         $passwordStr = $passwordFld.val();
 
         if ($usernameStr === "" || $passwordStr === "") {
-            alert('Both fields are required to log in');
+            $fieldsAlert.show();
         } else {
             userService.login($usernameStr, $passwordStr)
                 .then(function (response) {

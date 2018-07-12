@@ -27,6 +27,10 @@
     }
 
     function register() {
+        $usernameAlert.hide();
+        $passwordAlert.hide();
+        $fieldsAlert.hide();
+
         $usernameStr = $usernameFld.val();
         $passwordStr = $passwordFld.val();
         $password2Str = $password2Fld.val();
