@@ -40,11 +40,11 @@
     }
 
     function resetFlds() {
-        $usernameStr.val('');
-        $passwordStr.val('');
-        $firstNameStr.val('');
-        $lastNameStr.val('');
-        $roleStr.val('FACULTY');
+        $usernameFld.val('');
+        $passwordFld.val('');
+        $firstNameFld.val('');
+        $lastNameFld.val('');
+        $roleFld.val('FACULTY');
     }
 
     function createUser() {
@@ -64,16 +64,12 @@
         initVals();
         resetFlds();
 
-        var $currCheckBtn = $(event.currentTarget);
-        var $userId = $currCheckBtn.parent().parent().parent().attr('id');
-
-        userService.updateUser($userId,  new User($usernameStr, $passwordStr, $firstNameStr,
-                                                  $lastNameStr, $roleStr, null, null, null, null))
+        userService.updateUser(new User($usernameStr, $passwordStr, $firstNameStr,
+                                        $lastNameStr, $roleStr, null, null, null))
             .then(findAllUsers);
     }
 
     function removeUser(event) {
-        console.log(event);
         var $currRemoveBtn = $(event.currentTarget);
         var $userId = $currRemoveBtn.parent().parent().parent().attr('id');
 

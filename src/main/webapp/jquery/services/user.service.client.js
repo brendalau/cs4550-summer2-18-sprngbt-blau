@@ -38,8 +38,8 @@ function UserServiceClient() {
     }
 
     function findUserById(userId) {
-        return fetch(self.userUrl + '/' + userId)
-            .then(function (response) {
+        return fetch(self.userUrl + '/id/' + userId)
+            .then(function(response) {
                 return response.json();
             });
     }
@@ -51,9 +51,9 @@ function UserServiceClient() {
              });
     }
 
-    function updateUser(userId, user) {
+    function updateUser(user) {
         return fetch(
-            self.userUrl + '/' + userId, {
+            self.userUrl, {
                  method: 'put',
                  body: JSON.stringify(user),
                  headers: {'content-type': 'application/json'}
@@ -78,7 +78,7 @@ function UserServiceClient() {
     }
 
     function findUserByUsername(username) {
-        return fetch(self.registerUrl + '/' + username)
+        return fetch(self.registerUrl + '/username/' + username)
             .then(function (response) {
                 return response.json();
             });
