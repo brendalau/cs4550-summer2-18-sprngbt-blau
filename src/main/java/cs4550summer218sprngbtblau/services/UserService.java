@@ -50,21 +50,17 @@ public class UserService {
 		return (List<User>) repository.findAll();
 	}
 
-	@PutMapping("/api/user/{userId}")
-	public User updateUser(@PathVariable("userId") int userId, @RequestBody User newUser) {
-		Optional<User> data = repository.findById(userId);
+	@PutMapping("/api/user")
+	public User updateUser(@RequestBody User newUser) {
+		User data = repository.findUserByUsername(newUser.getUsername());
 		
-		if (data.isPresent()) {
-			User user = data.get();
-			user.setUsername(newUser.getUsername());
-			user.setFirstName(newUser.getFirstName());
-			user.setLastName(newUser.getLastName());
-			user.setRole(newUser.getRole());
-			user.setPhone(newUser.getPhone());
-			user.setEmail(newUser.getEmail());
-			user.setDob(newUser.getDob());
-			repository.save(user);
-			return user;
+		if (data != null) {
+			data.setPassword(newUser.getPassword());
+			data.setFirstName(newUser.getFirstName());
+			data.setLastName(newUser.getLastName());
+			data.setRole(newUser.getRole());
+			repository.save(data);
+			return data;
 		}
 		return null;
 	}
@@ -75,23 +71,20 @@ public class UserService {
 		
 		if (data == null) {
 			session.setAttribute("user", user);
+			response.setStatus(HttpServletResponse.SC_CREATED);
 		} else {
 			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 		}
-		return user;
+		return data;
 	}
 	
-	@GetMapping("/api/user/{userId}")
-	public User findUserById(@PathVariable("userId") int userId) {
-		Optional<User> data = repository.findById(userId);
-		
-		if (data.isPresent()) {
-			return data.get();
-		}
-		return null;
+	@GetMapping("/api/user/id/{userId}")
+	public Optional<User> findUserByUserId(@PathVariable("userId") String userId) {
+		int id = Integer.parseInt(userId);
+		return repository.findById(id);
 	}
 	
-	@GetMapping("/api/user/{username}")
+	@GetMapping("/api/user/username/{username}")
 	public User findUserByUsername(@PathVariable("username") String username) {
 		User data = repository.findUserByUsername(username);
 		
@@ -123,6 +116,7 @@ public class UserService {
 		User user = data;
 		
 		if (data != null) {
+			user.setPassword(updatedUser.getPassword());
 			user.setFirstName(updatedUser.getFirstName());
 			user.setLastName(updatedUser.getLastName());
 			user.setRole(updatedUser.getRole());
