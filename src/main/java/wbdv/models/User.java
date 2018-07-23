@@ -1,4 +1,4 @@
-package cs4550summer218sprngbtblau.models;
+package wbdv.models;
 
 import java.util.Date;
 

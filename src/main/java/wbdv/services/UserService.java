@@ -1,4 +1,4 @@
-package cs4550summer218sprngbtblau.services;
+package wbdv.services;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import cs4550summer218sprngbtblau.models.User;
-import cs4550summer218sprngbtblau.repositories.UserRepository;
+import wbdv.models.User;
+import wbdv.repositories.UserRepository;
 
 @RestController
 public class UserService {
